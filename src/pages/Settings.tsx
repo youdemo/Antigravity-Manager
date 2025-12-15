@@ -25,9 +25,15 @@ function Settings() {
     // Dialog state
     // Dialog state
     const [isClearLogsOpen, setIsClearLogsOpen] = useState(false);
+    const [dataDirPath, setDataDirPath] = useState<string>('~/.antigravity_tools/');
 
     useEffect(() => {
         loadConfig();
+
+        // 获取真实数据目录路径
+        invoke<string>('get_data_dir_path')
+            .then(path => setDataDirPath(path))
+            .catch(err => console.error('Failed to get data dir:', err));
     }, [loadConfig]);
 
     useEffect(() => {
@@ -280,7 +286,7 @@ function Settings() {
                                     <input
                                         type="text"
                                         className="flex-1 px-4 py-4 border border-gray-200 dark:border-base-300 rounded-lg bg-gray-50 dark:bg-base-200 text-gray-900 dark:text-base-content font-medium"
-                                        value="~/.antigravity_tools/"
+                                        value={dataDirPath}
                                         readOnly
                                     />
                                     <button

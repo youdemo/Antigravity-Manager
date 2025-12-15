@@ -232,14 +232,30 @@ pub async fn open_data_folder() -> Result<(), String> {
             .map_err(|e| format!("打开文件夹失败: {}", e))?;
     }
     
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(target_os = "windows")]
     {
-        // Simple fallback or generic open if needed, but assuming mac for this user
-        // Could use `opener` crate if we added it, but std::process::Command is fine for Mac
-         return Err("不支持的操作系统".to_string());
+        std::process::Command::new("explorer")
+            .arg(path)
+            .spawn()
+            .map_err(|e| format!("打开文件夹失败: {}", e))?;
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        std::process::Command::new("xdg-open")
+            .arg(path)
+            .spawn()
+            .map_err(|e| format!("打开文件夹失败: {}", e))?;
     }
 
     Ok(())
+}
+
+/// 获取数据目录绝对路径
+#[tauri::command]
+pub async fn get_data_dir_path() -> Result<String, String> {
+    let path = modules::account::get_data_dir()?;
+    Ok(path.to_string_lossy().to_string())
 }
 
 /// 显示主窗口

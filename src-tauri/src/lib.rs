@@ -58,6 +58,7 @@ pub fn run() {
             commands::save_text_file,
             commands::clear_log_cache,
             commands::open_data_folder,
+            commands::get_data_dir_path,
             commands::show_main_window,
             commands::get_antigravity_path,
         ])
