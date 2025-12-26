@@ -472,21 +472,21 @@ print(response.text)`;
                                     </div>
                                     <div className="flex-1">
                                         <span className="text-xs font-medium text-gray-900 dark:text-base-content">
-                                            {t('proxy.config.allow_lan_access') || '允许局域网访问'}
+                                            {t('proxy.config.allow_lan_access')}
                                         </span>
                                         <p className="mt-0.5 text-[10px] text-gray-500 dark:text-gray-400">
                                             {(appConfig.proxy.allow_lan_access || false)
-                                                ? '🌐 监听 0.0.0.0，局域网设备可访问'
-                                                : '🔒 仅监听 127.0.0.1，仅本机可访问（隐私优先）'}
+                                                ? t('proxy.config.allow_lan_access_hint_enabled')
+                                                : t('proxy.config.allow_lan_access_hint_disabled')}
                                         </p>
                                         {(appConfig.proxy.allow_lan_access || false) && (
                                             <p className="mt-1 text-[10px] text-amber-600 dark:text-amber-500">
-                                                ⚠️ 开启后局域网内其他设备可访问，请确保 API 密钥安全
+                                                {t('proxy.config.allow_lan_access_warning')}
                                             </p>
                                         )}
                                         {status.running && (
                                             <p className="mt-1 text-[10px] text-blue-600 dark:text-blue-400">
-                                                ℹ️ 需要重启服务后生效
+                                                {t('proxy.config.allow_lan_access_restart_hint')}
                                             </p>
                                         )}
                                     </div>
